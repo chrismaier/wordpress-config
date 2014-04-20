@@ -1,0 +1,43 @@
+# Setup basic wordpress server
+
+
+# Build server on the cloud
+# (need API calls and what not here)
+
+
+
+# Setup any cloud load balancer stuff
+#  (need API calls here)
+
+
+# Setup DNS for hosts and VIP
+
+
+
+
+# Install Apache
+
+
+# Reconfigure httpd.conf files etc.
+
+
+# Create a temporary self signed SSL certificate
+
+
+# Install and configure the SSL certificate on apache
+
+
+# Install the wordpress software
+
+
+# Install any wordpress extensions
+
+
+# Setup wordpress datbase connectivity
+
+
+# Configure the SMTP server on the local box since WP will send email
+
+
+# Configure the local firewall to allow http/https traffic to pass
+
