@@ -10,34 +10,82 @@
 #  (need API calls here)
 
 
+
 # Setup DNS for hosts and VIP
+#  (need API calls for DNS)
+#  (need to find PTR API calls)
+
+di-blog-n01.drunkenidiot.org 	162.242.241.189
+di-blog-n02.drunkenidiot.org	162.242.245.84
 
 
 
+# Install Apache & other stuff needed by wordpress
+yum install apache -y
+yum install mod_ssl -y
+yum install php -y
+yum install php-mysql -y
 
-# Install Apache
 
 
 # Reconfigure httpd.conf files etc.
+#  (borrow from the apache-config project ?)
+
+
+
+# Make sure httpd will start automatically
+chkconfig httpd on
+
 
 
 # Create a temporary self signed SSL certificate
+openssl genrsa -des3 -out blog.drunkenidiot.org.key 4096 
+openssl rsa -in blog.drunkenidiot.org.key -out blog.drunkenidiot.org.key.nopass
+openssl req -new -key blog.drunkenidiot.org.key.nopass -out blog.drunkenidiot.org.csr
+openssl x509 -req -days 3650 -in blog.drunkenidiot.org.csr -signkey blog.drunkenidiot.org.key.nopass -out blog.drunkenidiot.org.crt
+
 
 
 # Install and configure the SSL certificate on apache
+#  (all the work here is currently scp / vi )
+#  make sure to force the 443 port to listen by specifying the IP
+#  162.242.241.189 
+#  10.208.164.72 
+
+
+
+
+# Setup wordpress datbase connectivity
+10.208.164.72   -  162.242.241.189
+10.208.164.187  -  162.242.245.84
+
+CREATE DATABASE drunkenidiot;
+CREATE USER 'wpdiadmin' 
+GRANT ALL PRIVILEGES ON drunkenidiot.* TO "wpdiadmin"@"10.208.164.72" IDENTIFIED BY "drunk3n!d!0t";
+GRANT ALL PRIVILEGES ON drunkenidiot.* TO "wpdiadmin"@"10.208.164.187" IDENTIFIED BY "drunk3n!d!0t";
+GRANT ALL PRIVILEGES ON drunkenidiot.* TO "wpdiadmin"@"localhost" IDENTIFIED BY "drunk3n!d!0t";
+
+-A INPUT -s 10.208.164.72/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+-A INPUT -s 10.208.164.187/32 -p tcp -m tcp --dport 3306 -j ACCEPT 
+
+
+# Configure the SMTP server on the local box since WP will send email
+#  - this was primarily editing the /etc/postfix/main.cf file
+#  - to make sure that the $mydomain $myorigin and $myhostname were set properly
+
+
+
+# Configure the local firewall to allow http/https traffic to pass
+
 
 
 # Install the wordpress software
 
 
+
 # Install any wordpress extensions
 
 
-# Setup wordpress datbase connectivity
 
 
-# Configure the SMTP server on the local box since WP will send email
-
-
-# Configure the local firewall to allow http/https traffic to pass
 
