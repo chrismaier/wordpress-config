@@ -5,10 +5,8 @@
 # (need API calls and what not here)
 
 
-
 # Setup any cloud load balancer stuff
 #  (need API calls here)
-
 
 
 # Setup DNS for hosts and VIP
